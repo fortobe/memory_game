@@ -1,0 +1,206 @@
+body {
+  background: white;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+#root {
+  padding: 35px;
+  width: 40%;
+  margin: 20px auto;
+  border-radius: 10px;
+
+  .playground {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    perspective: 1000px;
+    margin-bottom: -15px;
+    min-height: 500px;
+
+    .card {
+      width: 15%;
+      user-select: none;
+      height: 110px;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+      margin-bottom: 15px;
+      transition: .6s;
+      transform-style: preserve-3d;
+      position: relative;
+
+      div {
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 10px;
+        transition: .6s;
+        background: #f4f5f7;
+
+        &.front {
+          font-size: 50px;
+          line-height: 120px;
+          cursor: pointer;
+          color: darken(#f4f5f7, 20%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &::before {
+            content: '?';
+          }
+        }
+
+        &.back {
+          transform: rotateY(180deg);
+          line-height: 110px;
+
+          img {
+            vertical-align: middle;
+            width: 70%;
+          }
+        }
+      }
+
+      &.opened, &.matched {
+        transform: rotateY(180deg);
+      }
+
+      &.matched {
+
+        .back {
+          animation: matched .8s 0s ease 1;
+          opacity: .2;
+        }
+      }
+    }
+  }
+}
+
+#timer {
+  padding: 30px;
+  font-size: 28px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+#game {
+  position: relative;
+
+  .leaderboard {
+    display: none;
+  }
+
+  button {
+    display: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    font-size: 18px;
+    border: 2px solid;
+    border-radius: 6px;
+    background: #fff;
+    margin-top: 40px;
+    transition: all .3s ease;
+
+    &:hover {
+      background: #000;
+      color: #fff;
+    }
+  }
+
+  &.finished {
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(233,233,233,.5);
+    }
+
+    .leaderboard {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      text-align: center;
+
+      h1 {
+        text-align: center;
+      }
+
+      ol {
+        margin: 30px auto 0;
+        padding: 0;
+        width: 60%;
+        font-size: 18px;
+        text-align: left;
+
+        li.current {
+          text-decoration: underline;
+        }
+      }
+
+      button {
+        display: inline-block;
+      }
+    }
+
+    #timer {
+      color: green;
+      animation: blink 1s infinite;
+    }
+  }
+}
+
+@keyframes matched {
+  0% {
+    opacity: .2;
+  }
+  30% {
+    opacity: .5;
+  }
+  50% {
+    opacity: .9;
+  }
+  70% {
+    opacity: .2;
+  }
+  100% {
+    opacity: .3;
+  }
+}
+
+@keyframes selected {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
